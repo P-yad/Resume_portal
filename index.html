@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resume Submission Portal</title>
+<title>Resume & Career Portal</title>
 <style>
 body { margin:0; font-family:Arial,sans-serif; background:linear-gradient(135deg,#11998e,#38ef7d); color:#fff; text-align:center; }
 header{padding:30px 20px;}
-header h1{font-size:2.2rem;margin-bottom:10px;}
+header h1{font-size:2.2rem; margin-bottom:10px;}
 .motivation{font-size:1.2rem;font-weight:bold;margin:15px 0;color:#ffeb3b;text-shadow:1px 1px 3px rgba(0,0,0,0.6);}
-.cta-buttons button{background:#fff;color:#11998e;padding:10px 20px;border-radius:8px;font-size:1rem;font-weight:bold;cursor:pointer;border:none;}
+.cta-buttons button{text-decoration:none;background:#fff;color:#11998e;padding:10px 20px;border-radius:8px;font-size:1rem;font-weight:bold;cursor:pointer;border:none;}
 .form-container,.dashboard{display:none;margin:30px auto;background:#fff;color:#000;width:90%;max-width:900px;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.4);text-align:left;}
 .form-container h2,.dashboard h2{text-align:center;margin-bottom:15px;}
 .form-container label{font-weight:bold;display:block;margin-top:10px;}
@@ -23,28 +23,26 @@ header h1{font-size:2.2rem;margin-bottom:10px;}
 #backBtn button{padding:8px 16px;margin:0 5px;border:none;border-radius:6px;background:#fff;color:#11998e;font-weight:bold;cursor:pointer;}
 .role-buttons button{margin:10px;padding:12px 20px;font-size:1rem;border-radius:8px;border:none;background:#11998e;color:#fff;font-weight:bold;cursor:pointer;}
 .role-buttons button:hover{background:#38ef7d;color:#000;}
-.approve-btn{background:#4caf50;color:#fff;margin-right:10px;}
-.reject-btn{background:#f44336;color:#fff;}
 </style>
 </head>
 <body>
 
-<div class="motivation">🚀 "Your career starts with the first step – upload your resume today and unlock opportunities!"</div>
+<div class="motivation">🚀 "Your career starts with the first step – upload your details today!"</div>
 
 <header id="homepage">
-<h1>Submit Your Resume Easily</h1>
-<p>Students and Professionals can upload resumes and track submission status.</p>
+<h1>Submit Your Resume & Career Applications</h1>
+<p>Upload your resume, apply for scholarships, or submit your career info.</p>
 <div class="cta-buttons" id="uploadSection">
-<button onclick="startProcess()">📤 Upload Resume</button>
+<button id="startBtn">📤 Start</button>
 </div>
 </header>
 
 <div id="backBtn"><button onclick="goBack()">⬅️ Back</button></div>
 
-<!-- Signup Form -->
+<!-- Signup -->
 <div class="form-container" id="signupForm">
 <h2>Sign Up</h2>
-<form onsubmit="submitSignup(event)">
+<form id="signupFormElement">
 <label>Name:</label><input type="text" required>
 <label>Email:</label><input type="email" required>
 <label>Password:</label><input type="password" required>
@@ -56,163 +54,268 @@ header h1{font-size:2.2rem;margin-bottom:10px;}
 <div class="form-container" id="roleSelectPage">
 <h2>Select Your Role</h2>
 <div class="role-buttons">
-<button onclick="chooseRole('student')">🎓 Student</button>
-<button onclick="chooseRole('jobApplicant')">📄 Job Applicant</button>
+<button onclick="chooseRole('scholarship')">🎯 Scholarships</button>
+<button onclick="chooseRole('student')">🎓 Student / Job Seeker</button>
 <button onclick="chooseRole('internshipSeeker')">💼 Internship Seeker</button>
 <button onclick="chooseRole('college')">🏫 College</button>
-<button onclick="chooseRole('scholarship')">🎯 Scholarship</button>
 <button onclick="chooseRole('freelancer')">🧑‍💻 Freelancer</button>
 <button onclick="chooseRole('entrepreneur')">🚀 Entrepreneur</button>
 </div>
 </div>
 
-<!-- Generic Role Form Template -->
-<div class="form-container" id="roleFormTemplate">
-<h2 id="roleFormTitle">Form</h2>
-<form id="roleForm" onsubmit="submitRoleForm(event)"></form>
+<!-- Forms (scholarship, student, internship, college, freelancer, entrepreneur) -->
+<!-- Scholarship Form -->
+<div class="form-container" id="scholarshipForm">
+<h2>Scholarship Application Form</h2>
+<form>
+<label>Full Name:</label><input type="text" required>
+<label>Date of Birth:</label><input type="date" required>
+<label>Gender:</label>
+<select required><option value="">--Select--</option><option>Male</option><option>Female</option><option>Other</option></select>
+<label>Contact Number:</label><input type="tel" required>
+<label>Email Address:</label><input type="email" required>
+<label>Institute Name:</label><input type="text" required>
+<label>Course / Stream:</label><input type="text" required>
+<label>Year of Study / Passing Year:</label><input type="text" required>
+<label>Percentage / CGPA / Grades:</label><input type="text" required>
+<label>Scholarship Name:</label><input type="text" required>
+<label>Family Income Details:</label><input type="text" required>
+<label>Key Skills:</label><textarea required></textarea>
+<label>Projects / Portfolios:</label><textarea required></textarea>
+<label>Certificates / Awards:</label><textarea required></textarea>
+<label>Resume (PDF):</label><input type="file" accept=".pdf" required>
+<button type="submit">Submit Scholarship</button>
+</form>
 </div>
 
-<!-- User Dashboard -->
-<div class="dashboard" id="userDashboard">
-<h2>Dashboard</h2>
-<div class="dashboard-section" id="dashboardDetails"></div>
-<div class="dashboard-section" style="text-align:center;">
-<button onclick="openAdminPanel()">🛠️ Admin Panel</button>
-</div>
+<!-- Student Form -->
+<div class="form-container" id="studentForm">
+<h2>Student / Job Seeker Form</h2>
+<form>
+<label>Full Name:</label><input type="text" required>
+<label>Email:</label><input type="email" required>
+<label>Phone:</label><input type="tel" required>
+<label>Current Institute / College:</label><input type="text" required>
+<label>Course / Stream:</label><input type="text" required>
+<label>Year / Passing Year:</label><input type="text" required>
+<label>Skills:</label><textarea required></textarea>
+<label>Experience:</label><textarea></textarea>
+<label>Resume (PDF):</label><input type="file" accept=".pdf" required>
+<button type="submit">Submit</button>
+</form>
 </div>
 
-<!-- Admin Panel -->
-<div class="dashboard" id="adminPanel">
-<h2>🛠️ Admin Panel</h2>
-<div class="dashboard-section"><h3>All Submissions</h3><div id="submissionList"></div></div>
+<!-- Internship Seeker Form -->
+<div class="form-container" id="internshipForm">
+<h2>Internship Seeker Form</h2>
+<form>
+<label>Full Name:</label><input type="text" required>
+<label>Email:</label><input type="email" required>
+<label>Phone:</label><input type="tel" required>
+<label>Current Institute / College:</label><input type="text" required>
+<label>Course / Stream:</label><input type="text" required>
+<label>Year / Passing Year:</label><input type="text" required>
+<label>Skills:</label><textarea required></textarea>
+<label>Internship Preferences:</label><textarea required></textarea>
+<label>Resume (PDF):</label><input type="file" accept=".pdf" required>
+<button type="submit">Submit</button>
+</form>
 </div>
+
+<!-- College Form -->
+<div class="form-container" id="collegeForm">
+<h2>College Information Form</h2>
+<form>
+<label>College Name:</label><input type="text" required>
+<label>Address:</label><textarea required></textarea>
+<label>Contact Email:</label><input type="email" required>
+<label>Contact Phone:</label><input type="tel" required>
+<label>Website / Courses:</label><textarea></textarea>
+<button type="submit">Submit</button>
+</form>
+</div>
+
+<!-- Freelancer Form -->
+<div class="form-container" id="freelancerForm">
+<h2>Freelancer Form</h2>
+<form>
+<label>Full Name:</label><input type="text" required>
+<label>Email:</label><input type="email" required>
+<label>Phone:</label><input type="tel" required>
+<label>Skills / Services Offered:</label><textarea required></textarea>
+<label>Portfolio / Projects:</label><textarea required></textarea>
+<label>Resume / Work Samples (PDF):</label><input type="file" accept=".pdf" required>
+<button type="submit">Submit</button>
+</form>
+</div>
+
+<!-- Entrepreneur Form -->
+<div class="form-container" id="entrepreneurForm">
+<h2>Entrepreneur Form</h2>
+<form>
+<label>Full Name:</label><input type="text" required>
+<label>Email:</label><input type="email" required>
+<label>Phone:</label><input type="tel" required>
+<label>Business Name:</label><input type="text" required>
+<label>Business Description:</label><textarea required></textarea>
+<label>Skills / Expertise:</label><textarea required></textarea>
+<label>Portfolio / Website:</label><textarea></textarea>
+<label>Resume / Pitch Deck (PDF):</label><input type="file" accept=".pdf" required>
+<button type="submit">Submit</button>
+</form>
+</div>
+
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+  <h2>Welcome, <span id="userName"></span>!</h2>
+  <p>You have successfully submitted your <span id="userRole"></span> information.</p>
+  
+  <div class="dashboard-section" id="dashboardDetails">
+    <!-- Submitted details appear here -->
+  </div>
+
+  <h3>Admin Panel</h3>
+  <div id="adminPanel">
+    <!-- Submissions with Approve / Reject buttons -->
+  </div>
+
+  <button onclick="goHome()">🏠 Back to Home</button>
+</div>
+
+<footer><p>© 2025 Resume & Career Portal</p></footer>
 
 <script>
-let users=[], submissions=[], currentUser=null, historyStack=[];
+let currentUser=null, historyStack=[], submissions=[];
 
-function startProcess(){ document.getElementById("homepage").style.display="none"; showForm("signupForm"); }
+// Start Button
+document.getElementById("startBtn").addEventListener("click", function(){
+    document.getElementById("homepage").style.display="none";
+    showForm("signupForm");
+});
 
+// Show form
 function showForm(id){
-  let current=document.querySelector(".form-container:not([style*='display: none']), .dashboard:not([style*='display: none'])");
-  if(current && current.id!==id) historyStack.push(current.id);
-  document.querySelectorAll(".form-container, .dashboard").forEach(el=>el.style.display="none");
+  let current = document.querySelector(".form-container:not([style*='display: none'])");
+  if(current && current.id !== id){ historyStack.push(current.id); }
+  document.querySelectorAll(".form-container").forEach(el=>el.style.display="none");
   document.getElementById(id).style.display="block";
   document.getElementById("backBtn").style.display="block";
 }
 
+// Back button
 function goBack(){
   if(historyStack.length>0){
     let last=historyStack.pop();
-    document.querySelectorAll(".form-container, .dashboard").forEach(el=>el.style.display="none");
+    document.querySelectorAll(".form-container").forEach(el=>el.style.display="none");
     document.getElementById(last).style.display="block";
-  }else{
-    document.querySelectorAll(".form-container, .dashboard").forEach(el=>el.style.display="none");
+  } else {
+    document.querySelectorAll(".form-container").forEach(el=>el.style.display="none");
     document.getElementById("homepage").style.display="block";
     document.getElementById("backBtn").style.display="none";
   }
 }
 
-function submitSignup(e){
+// Signup
+document.getElementById("signupFormElement").addEventListener("submit", function(e){
   e.preventDefault();
-  let name=e.target.querySelector("input[type=text]").value;
-  let email=e.target.querySelector("input[type=email]").value;
-  users.push({name,email});
-  currentUser=users[users.length-1];
-  alert("Signup Done ✅");
+  let name=this.querySelector("input[type=text]").value;
+  let email=this.querySelector("input[type=email]").value;
+  currentUser={name,email};
+  alert("Signup Successful!");
   showForm("roleSelectPage");
-}
+});
 
+// Choose Role
 function chooseRole(role){
   currentUser.role=role;
-  renderForm(role);
+  if(role==="scholarship"){ showForm("scholarshipForm"); }
+  else if(role==="student"){ showForm("studentForm"); }
+  else if(role==="internshipSeeker"){ showForm("internshipForm"); }
+  else if(role==="college"){ showForm("collegeForm"); }
+  else if(role==="freelancer"){ showForm("freelancerForm"); }
+  else if(role==="entrepreneur"){ showForm("entrepreneurForm"); }
 }
 
-function renderForm(role){
-  const formContainer=document.getElementById("roleFormTemplate");
-  const form=document.getElementById("roleForm");
-  let html='';
-  document.getElementById("roleFormTitle").innerText=role+" Details";
-  
-  switch(role){
-    case "student":
-      html+=`<label>Full Name:</label><input type="text" id="stuName" required>
-      <label>Email:</label><input type="email" id="stuEmail" required>
-      <label>Phone:</label><input type="tel" id="stuPhone" required>
-      <label>College:</label><input type="text" id="stuCollege" required>
-      <label>Resume:</label><input type="file" id="stuResume" required>`;
-      break;
-    case "scholarship":
-      html+=`<label>Full Name:</label><input type="text" id="schName" required>
-      <label>Email:</label><input type="email" id="schEmail" required>
-      <label>Phone:</label><input type="tel" id="schPhone" required>
-      <label>Scholarship Type:</label><select id="schType" required>
-      <option value="">Select Type</option><option value="Merit-based">Merit-based</option>
-      <option value="Need-based">Need-based</option><option value="Sports">Sports</option>
-      <option value="Research">Research</option></select>
-      <label>Supporting Document:</label><input type="file" id="schDoc" required>`;
-      break;
-    default:
-      html+=`<label>Full Name:</label><input type="text" id="roleName" required>
-      <label>Email:</label><input type="email" id="roleEmail" required>
-      <label>Phone:</label><input type="tel" id="rolePhone" required>
-      <label>Resume:</label><input type="file" id="roleResume" required>`;
-  }
-  html+=`<button type="submit">Submit</button>`;
-  form.innerHTML=html;
-  showForm("roleFormTemplate");
-}
-
-function submitRoleForm(e){
-  e.preventDefault();
-  let role=currentUser.role;
-  let submission={role,status:"Submitted ✅"};
-  if(role==="student"){
-    submission.name=document.getElementById("stuName").value;
-    submission.email=document.getElementById("stuEmail").value;
-    submission.phone=document.getElementById("stuPhone").value;
-    submission.college=document.getElementById("stuCollege").value;
-  }else if(role==="scholarship"){
-    submission.name=document.getElementById("schName").value;
-    submission.email=document.getElementById("schEmail").value;
-    submission.phone=document.getElementById("schPhone").value;
-    submission.schType=document.getElementById("schType").value;
-  }else{
-    submission.name=document.getElementById("roleName").value;
-    submission.email=document.getElementById("roleEmail").value;
-    submission.phone=document.getElementById("rolePhone").value;
-  }
-  submissions.push(submission);
-  alert("Submission successful ✅");
-  showForm("userDashboard");
-  updateDashboard(submission);
-}
-
-function updateDashboard(sub){
-  document.getElementById("dashboardDetails").innerHTML=`<b>Role:</b> ${sub.role}<br><b>Name:</b> ${sub.name}<br><b>Email:</b> ${sub.email}<br><b>Status:</b> ${sub.status}`;
-}
-
-function openAdminPanel(){
-  showForm("adminPanel");
-  displaySubmissions();
-}
-
-function displaySubmissions(){
-  const div=document.getElementById("submissionList");
-  div.innerHTML="";
-  submissions.forEach((s,i)=>{
-    const item=document.createElement("div");
-    item.className="resume-item";
-    item.innerHTML=`<b>Role:</b> ${s.role} <b>Name:</b> ${s.name} <b>Status:</b> <span id="status${i}">${s.status}</span>
-    <button class="approve-btn" onclick="updateStatus(${i},'Approved ✅')">Approve</button>
-    <button class="reject-btn" onclick="updateStatus(${i},'Rejected ❌')">Reject</button>`;
-    div.appendChild(item);
+// Show dashboard after form submit
+function showDashboard(formId){
+  let form = document.getElementById(formId);
+  let detailsDiv = document.getElementById("dashboardDetails");
+  let inputs = form.querySelectorAll("input, textarea, select");
+  let html = "<ul>";
+  let submissionData={};
+  inputs.forEach(input=>{
+    if(input.type!=="file" && input.value){
+      html += `<li><strong>${input.previousElementSibling.innerText}</strong> ${input.value}</li>`;
+      submissionData[input.previousElementSibling.innerText]=input.value;
+    }
   });
+  html += "</ul>";
+
+  document.getElementById("userName").innerText = currentUser.name;
+  document.getElementById("userRole").innerText = currentUser.role;
+  detailsDiv.innerHTML = html;
+
+  submissionData.userName=currentUser.name;
+  submissionData.role=currentUser.role;
+  submissions.push(submissionData);
+
+  updateAdminPanel();
+
+  document.querySelectorAll(".form-container").forEach(el=>el.style.display="none");
+  document.getElementById("dashboard").style.display="block";
+  document.getElementById("backBtn").style.display="none";
 }
 
-function updateStatus(index,status){
-  submissions[index].status=status;
-  document.getElementById("status"+index).innerText=status;
+// Update Admin Panel
+function updateAdminPanel(){
+  let adminDiv=document.getElementById("adminPanel");
+  if(submissions.length===0){ adminDiv.innerHTML="<p>No submissions yet.</p>"; return; }
+  let html="";
+  submissions.forEach((sub,index)=>{
+    html+=`<div class="dashboard-section">
+      <strong>${sub.userName} (${sub.role})</strong>
+      <ul>`;
+    for(let key in sub){
+      if(key!=="userName" && key!=="role"){
+        html+=`<li><strong>${key}</strong>: ${sub[key]}</li>`;
+      }
+    }
+    html+=`</ul>
+      <button onclick="approve(${index})">✅ Approve</button>
+      <button onclick="reject(${index})">❌ Reject</button>
+    </div>`;
+  });
+  adminDiv.innerHTML=html;
 }
+
+// Approve / Reject
+function approve(index){
+  alert(`Application of ${submissions[index].userName} Approved ✅`);
+  submissions.splice(index,1);
+  updateAdminPanel();
+}
+function reject(index){
+  alert(`Application of ${submissions[index].userName} Rejected ❌`);
+  submissions.splice(index,1);
+  updateAdminPanel();
+}
+
+// Back to home
+function goHome(){
+  document.getElementById("dashboard").style.display="none";
+  document.getElementById("homepage").style.display="block";
+}
+  
+// Add submit listeners for all role forms
+["scholarshipForm","studentForm","internshipForm","collegeForm","freelancerForm","entrepreneurForm"].forEach(formId=>{
+  let form=document.getElementById(formId).querySelector("form");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    alert("Form submitted successfully!");
+    showDashboard(formId);
+  });
+});
 </script>
+
 </body>
 </html>
